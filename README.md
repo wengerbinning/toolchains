@@ -1,0 +1,1 @@
+This project is a prototype of managment toolchains designed to simplify the process of compiling accress architectural platforms.
