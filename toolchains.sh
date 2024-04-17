@@ -7,7 +7,7 @@ SCRIPT_HOME=$(cd $(dirname $BASH_SOURCE) && pwd);
 DEFAULT_TOOLCHAINS_HOME=${SCRIPT_HOME}
 
 ##
-TOOLCHAINS_HOME="/usr/libexec/toolchains"
+TOOLCHAINS_HOME="/usr"
 TOOLCHAIN_HOME="/mnt/work/toolchains"
 
 ## Check Variuable
