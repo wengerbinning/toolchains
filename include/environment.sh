@@ -22,7 +22,7 @@ _env_prepare () {
 cat > ${1:-.environment} << EOF
 # Detect multiple imported environments
 test -n "\$TOOLCHAIN_PATH" && { echo -e "\e[33mYou have imported '\$TOOLCHAIN_NAME'!\e[0m"; return; }
-
+# =========================================================================== #
 EOF
 }
 
