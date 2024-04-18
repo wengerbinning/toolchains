@@ -61,8 +61,6 @@ env_import_toolchain() {
 		test -n "$val" || warning ""
 		sed -i "s|^import $var|$var=$val|g" .environment
 	done
-
-	source .environment
 }
 
 # =========================================================================== #
