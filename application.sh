@@ -47,7 +47,7 @@ _app_scan() {
 }
 
 app_scan() {
-	# ver: v0.1
+	# ver: v0.2
 	local dirs=$@ i
 	for i in $(seq 1 1 ${SCAN_DEPTH:-8}); do
 		result=$(_app_scan $i $dirs)
@@ -57,7 +57,7 @@ app_scan() {
 		test -n "$dirs" || break
 	done
 	_idx=0
-	for app in $APPS; do _idx=$((_idx + 1)); echo $_idx $app; done
+	for app in $APPS; do _idx=$((_idx + 1)); printf "%2d %s\n" $_idx $app; done
 }
 
 # usage: app_install <src> <dst> [policy]
