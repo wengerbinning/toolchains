@@ -120,7 +120,7 @@ app_install() {
 cmd=$1; shift
 case $cmd in
 install)
-    app_install $1 $2 ;;
+    app_install $1 $2 $3 ;;
 scan)
     app_scan ${1:-/srv/released} ;;
 *)
