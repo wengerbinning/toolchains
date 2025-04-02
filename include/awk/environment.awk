@@ -26,8 +26,14 @@ BEGIN {}
 # default
 /^\s*[^(#*|import|export)]/ {
 	if ($1 ~ /.*=/) { printf "%s", $1 } else {printf "%s=", $1 }
-	if ($2 ~ /=.+/) { if (NF > 2) { printf "%s ", substr($2, 2, length($2)) } else {printf "%s", substr($2, 2, length($2))} }
-	for (i = 3; i <= NF; i++) {if (i == NF) {printf "%s", $i} else {printf "%s ", $i}}
+	if ($2 ~ /=.+/) { if (NF > 2) {
+		printf "%s ", substr($2, 2, length($2))
+	} else {
+		printf "%s", substr($2, 2, length($2))}
+	}
+	for (i = 3; i <= NF; i++) {
+		if (i == NF) {printf "%s", $i} else {printf "%s ", $i}
+	}
 	printf "\n"
 }
 

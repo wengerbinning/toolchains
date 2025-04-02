@@ -1,0 +1,67 @@
+#### Toolchain Framework Variables
+
+import TOOLCHAIN_HOME
+import TOOLCHAIN_NAME
+
+#### Toolchain Base Variables
+
+TOOLCHAIN_REVERSION = ""
+TOOLCHAIN_PATH      = "${TOOLCHAIN_HOME}/${TOOLCHAIN_NAME}${TOOLCHAIN_REVERSION:+/$TOOLCHAIN_REVERSION}"
+TOOLCHAIN_BIN       = "${TOOLCHAIN_PATH}/bin"
+TOOLCHIAN_INCLUDE   = "${TOOLCHAIN_PATH}/include"
+TOOLCHIAN_LIB       = "${TOOLCHAIN_PATH}/lib"
+
+PATH = "${TOOLCHAIN_BIN}:${PATH}"
+export PATH
+
+#### Toolchain Tool Variables
+
+ARCH          = "x86_64"
+TARGET        = "x86_64-unknown-linux-gnu"
+CROSS_PREFIX  = "x86_64-unknown-linux-gnu-"
+CROSS_COMPILE = "x86_64-unknown-linux-gnu-"
+#
+CC      = "${CROSS_PREFIX}gcc"
+LD      = "${CROSS_PREFIX}ld"
+AR      = "${CROSS_PREFIX}ar"
+CXX     = "${CROSS_PREFIX}g++"
+STRIP   = "${CROSS_PREFIX}strip"
+
+export CC LD AR CXX STRIP
+
+#### Toolchain Environment Variables
+
+#CPATH
+#C_INCLUDE_PATH = "/usr/include:/include"
+#CPLUS_INCLUDE_PATH
+#OBJC_INCLUDE_PATH
+#export C_INCLUDE_PATH
+#
+#LIBRARY_PATH = "/usr/lib:/lib"
+#LD_LIBRARY_PATH = "/usr/lib:/lib"
+#export LIBRARY_PATH LD_LIBRARY_PATH
+
+#### Toolchain Flags Variables
+
+# CFLAGS    = "--sysroot ${TOOLCHAIN_PATH}"
+# #CPPFLAGS  =
+# #LDCFLAGS  =
+# CXXFLAGS  = "--sysroot ${TOOLCHAIN_PATH}"
+# export CFLAGS
+
+#### Toolchain Runtime Variables
+
+#LD_PRELOAD = "${LD_PRELOAD:+$LD_PRELOAD:}${TOOLCHAIN_HOST_PATH}/usr/lib64/libtinfo.so.5"
+#LD_PRELOAD = "${LD_PRELOAD:+$LD_PRELOAD:}${TOOLCHAIN_HOST_PATH}/usr/lib64/libncursesw.so.5"
+#export LD_PRELOAD
+
+#### Toolchain Linking Variable
+
+#RPATH           =
+#LD_LIBRARY_PATH = "${TOOLCHAIN_HOST_PATH}/usr/lib64"
+#export LD_LIBRARY_PATH
+#RUNPATH                 =
+#PKG_CONFIG_PATH         =
+#PKG_CONFIG_SYSROOT_DIR  =
+
+#### Others Variables
