@@ -1,0 +1,108 @@
+#!/bin/sh
+
+TOPDIR="${PWD}/../.."
+
+src=glibc
+dst=$PWD/dest
+
+repo_1="https://sourceware.org/git/glibc.git"
+repo_N=1
+
+
+#
+old_cwd=$PWD
+cd $src && {
+	# 0.
+	test -f .build-default || git clean -fdx
+	touch .build-default && mkdir build
+	cd build
+	../configure --prefix=
+	test $? -eq 0 || exit 1
+	# 1.
+	make -j$(nproc)
+	test $? -eq 0 || exit 2
+	# 2.
+	make install DESTDIR=${dst:-$PWD/dest}
+	test $? -eq 0 || exit 3
+	# end
+	echo -e "\e[32m build successful! \e[0m"
+cd $old_cwd >/dev/null; }
+
+
+
+
+# usage: awk_parse_open <awk>
+awk_parse_open() {
+	local file=${1:-.parse.awk}
+	_AWK_OPEN_FILE=$file
+cat > $file <<EOF
+BEGIN { type="none"; delete table }
+# init variable
+{ path=\$1 }
+/#.*/ { next }
+EOF
+}
+
+# usage: awk_parse_close <awk>
+awk_parse_close() {
+cat >> ${1:-$_AWK_OPEN_FILE} << EOF
+# others
+{ if (type != "others") {
+    type="others"; table[type] = true; printf "# %s\n", type
+} printf "%s\n", path }
+# Finish
+END { print "@";
+for (type in table) { if (table[type])
+    table[type] = false;
+    print name >> type;
+    printf "%s ", type
+} }
+EOF
+}
+
+# usage: awk_parse_add <type> <path> [awk]
+awk_parse_add() {
+cat >> ${3:-$_AWK_OPEN_FILE} <<EOF
+# $1
+\$2 ~ /^${2//\//\\\/}/ { if (type != "$1") {
+    type="$1"; table[type] = true; printf "# %s\n", type
+} printf "%s\n", path; next }
+EOF
+}
+
+
+# awk_parse_open .parse.awk
+# #
+# awk_parse_add service   lib/systemd/system
+# awk_parse_add pkgconfig lib/pkgconfig
+# awk_parse_add lib       lib
+# #
+# awk_parse_add bin       /bin
+# #
+# awk_parse_add include   /include
+# #
+# awk_parse_add doc       /share/doc
+# awk_parse_add man       /share/man
+# awk_parse_add info      /share/info
+# awk_parse_add locale    /share/locale
+# awk_parse_add license   /share/license
+# awk_parse_add fonts     /share/fonts
+# awk_parse_add icons     /share/icons
+# awk_parse_add share     /share
+# #
+# awk_parse_add profile   /etc/profile.d
+# awk_parse_add etc       /etc
+# #
+# awk_parse_close
+
+# APPS_HOME=$PWD/labs
+
+src=$dst
+test -n "$APPS_HOME" || exit
+test -d $APPS_HOME/glibc || mkdir -p $APPS_HOME/glibc
+dst=$APPS_HOME/glibc/rootfs
+mv $src $dst
+cd $dst && tree -ifF > ../glibc.txt && cd - >/dev/null
+sed -ri -e 's/^.\/(.*)$/\1/g' -e 's/([0-9]* directories.*)/# \1/' \
+	$APPS_HOME/glibc/glibc.txt
+# awk -f .parse.awk $APPS_HOME/glibc/glibc.txt > $APPS_HOME/glibc/app-glibc

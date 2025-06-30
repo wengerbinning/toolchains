@@ -1,0 +1,23 @@
+#!/bin/sh
+
+TOPDIR="${PWD}/../.."
+
+##
+repo_1="git://busybox.net/busybox.git"
+repo_N=1
+
+
+##
+src=busybox
+dst=$PWD/dest
+
+old_cwd=$PWD
+cd $src && {
+    # 0.
+    make CROSS_COMPILE=${CROSS_PREFIX} menuconfig
+    # 1.
+    make -j6 CROSS_COMPILE=${CROSS_PREFIX}
+
+    # 2.
+    make -j6 CROSS_COMPILE=${CROSS_PREFIX} CONFIG_PREFIX=$(pwd -P)/destdir install
+}

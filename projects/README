@@ -1,0 +1,66 @@
+
+* [default/glibc](https://sourceware.org/glibc/)
+  - glibc: <https://sourceware.org/git/glibc.git>
+* [default/musl](https://www.musl-libc.org/)
+  - musl: <https://git.musl-libc.org/git/musl.git>
+* [default/uClibc](https://www.uclibc.org/)
+  - uclibc: <https://git.busybox.net/uClibc.git>
+* [default/busybox](https://busybox.net/)
+  - busybox: <https://git.busybox.net/busybox.git>
+
+## Basic
+
+* [default/uBoot](https://u-boot.org/)
+  - u-boot: <https://github.com/u-boot/u-boot.git>
+* default/linux
+
+## Develop
+
+* [default/binutils](https://sourceware.org/binutils/)
+  - binutils-gdb: <https://sourceware.org/git/binutils-gdb.git>
+* [default/gcc](https://gcc.gnu.org/)
+  - gcc: <https://gcc.gnu.org/git/gcc.git>
+  - gmp: <https://gmplib.org/>
+  - isl: <https://repo.or.cz/w/isl.git>
+  - mpc: <https://www.multiprecision.org/>
+  - mpfr: <https://gitlab.inria.fr/mpfr/mpfr.git>
+* [default/make]
+
+* [default/autoreconf]
+* [default/automake]
+
+
+
+
+## Apps
+
+* default/bash
+* default/curl
+* default/file
+* default/json-c
+* default/libcap-ng
+* default/libnl
+* default/libxcrypt
+* default/ncurses
+* default/nss
+* default/pam
+* default/procps
+* default/qemu
+* default/readline
+* default/tar
+* default/unbound
+  - unbound: <https://github.com/NLnetLabs/unbound.git>
+* default/ucode
+* default/zstd
+
+* default/libreswan
+  - libreswan: <https://github.com/libreswan/libreswan.git>
+* default/strongswan
+  - strongswan: <https://github.com/strongswan/strongswan.git>
+
+
+
+## Links
+
+* <https://repo.or.cz/>
+*
