@@ -129,3 +129,15 @@ $0 install <dst path> {full|embed|devel}
 $0 scan <path>
 EOF
 esac
+
+
+
+
+
+
+
+* binutils
+* linux-headers
+* gcc-bare
+* musl
+* gcc

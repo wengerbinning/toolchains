@@ -7,17 +7,49 @@ repo_1="git://busybox.net/busybox.git"
 repo_N=1
 
 
-##
-src=busybox
-dst=$PWD/dest
 
-old_cwd=$PWD
-cd $src && {
-    # 0.
-    make CROSS_COMPILE=${CROSS_PREFIX} menuconfig
-    # 1.
-    make -j6 CROSS_COMPILE=${CROSS_PREFIX}
 
-    # 2.
-    make -j6 CROSS_COMPILE=${CROSS_PREFIX} CONFIG_PREFIX=$(pwd -P)/destdir install
-}
+
+
+
+
+
+
+
+ARCH=mips
+TARGET="mipsel-unknown-linux-musl"
+TOOLCHAIN_PATH="/opt/toolchains/toolchain-mipsel-linux-musl"
+export PATH="$TOOLCHAIN_PATH/bin${PATH:+:$PATH}"
+
+set -x
+test -d "${workdir:-build-stage1}" || mkdir -p "${workdir:-build-stage1}"
+src=$PWD && cd "${workdir:-build-stage1}" && {
+	$src/configure ARCH=$ARCH --target=$TARGET \
+		--prefix= \
+		--enable-languages=c \
+		--without-headers \
+		--disable-shared \
+		--with-sysroot=/ --with-build-sysroot=$TOOLCHAIN_PATH || exit
+	make -j$(nproc) all-gcc || exit
+	make install-gcc DESTDIR=$src/dst-stage1 || exit
+	echo -e "\e[32mBuild $src finished.\e[0m"
+cd - >/dev/null; }
+
+
+
+#!/bin/bash
+
+ARCH=mips
+TARGET="mipsel-unknown-linux-musl"
+CROSS_COMPILE="mipsel-unknown-linux-musl-"
+TOOLCHAIN_PATH="/opt/toolchains/toolchain-mipsel-linux-musl"
+export PATH="$TOOLCHAIN_PATH/bin${PATH:+:$PATH}"
+
+test -d "${workdir:-build}" || mkdir -p "${workdir:-build}"
+src=$PWD && cd "${workdir:-build}" && {
+	$src/configure --prefix= --target=$TARGET CROSS_COMPILE=$CROSS_COMPILE \
+        --disable-shared || exit
+	make -j$(nproc) || exit
+	make install DESTDIR=$src/dst || exit
+	echo -e "\e[32mBuild $src finished.\e[0m"
+cd - >/dev/null; }

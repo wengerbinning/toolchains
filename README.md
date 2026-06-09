@@ -59,3 +59,18 @@ TOOLCHAINS_ETC=${TOOLCHAINS}/etc
 TOOLCHAINS_ENV=${TOOLCHAINS}/enviroments
 TOOLCHAINS_HOME=${TOOLCHAINS}/toolchains
 ```
+
+
+ARCH=
+
+
+
+
+
+* binutils
+* linux-include
+* gcc-bare
+* libc-include
+* gcc-library
+* libc-full
+* gcc-full
